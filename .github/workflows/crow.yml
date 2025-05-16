@@ -1,12 +1,10 @@
 name: Crow workflow integration
-
 on:
   push:
     branches:
       - main
+      - master
   pull_request:
-    branches:
-      - main
 
 jobs:
   trigger-crow:
@@ -16,7 +14,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
       - name: Finding commit message for push
         if: github.event_name == 'push'
         run: |
@@ -28,7 +25,6 @@ jobs:
           echo "$MESSAGE"
         env:
           COMMIT_MESSAGE: "${{ github.event.head_commit.message }}"
-
       - name: Finding commit message for pull request
         if: github.event_name == 'pull_request'
         run: |
@@ -42,7 +38,6 @@ jobs:
         env:
           LAST_COMMIT: "${{ github.event.pull_request.head.sha }}"
           PR_NUMBER: "${{ github.event.pull_request.number }}"
-
       - name: Triggering crow
         run: |
           set -euo pipefail
@@ -53,8 +48,7 @@ jobs:
                --header 'Content-Type: application/json' \
                --data "$(echo "$MESSAGE" | base64 -d | jq -R -s "{ commitMessage: ., checkedCommit: \"$GH_COMMIT\" }")" \
                https://compiler.vads.kastel.kit.edu/api/integration/token/queue/rev/"$GITHUB_SHA"
-
-      - name: Give explanation
+      - name: Explaining a bit
         run: |
           echo "The commit was pushed in the crow queue."
           echo "Crow periodically syncs the status from its queue to your repository, so a check should appear here soon :)"
