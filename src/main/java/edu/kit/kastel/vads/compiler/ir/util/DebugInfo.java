@@ -1,6 +1,6 @@
 package edu.kit.kastel.vads.compiler.ir.util;
 
-import edu.kit.kastel.vads.compiler.Span;
+import edu.kit.kastel.vads.compiler.util.Span;
 
 /// Provides information to ease debugging
 public sealed interface DebugInfo {

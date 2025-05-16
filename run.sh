@@ -1,3 +1,3 @@
 #!/usr/bin/env sh
-BIN_DIR="$(dirname "$0")/build/install/compiler/bin"
-$BIN_DIR/compiler "$@"
+COMPILER="$(dirname "$0")/build/install/CZero/bin/CZero"
+$COMPILER --source="$1" --output="$2" --target=X86

@@ -1,7 +1,7 @@
 package edu.kit.kastel.vads.compiler.parser.ast;
 
-import edu.kit.kastel.vads.compiler.Span;
 import edu.kit.kastel.vads.compiler.parser.visitor.Visitor;
+import edu.kit.kastel.vads.compiler.util.Span;
 import java.util.List;
 
 public record BlockTree(List<StatementTree> statements, Span span) implements StatementTree {

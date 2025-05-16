@@ -1,4 +1,4 @@
-package edu.kit.kastel.vads.compiler;
+package edu.kit.kastel.vads.compiler.util;
 
 public sealed interface Span {
   Position start();

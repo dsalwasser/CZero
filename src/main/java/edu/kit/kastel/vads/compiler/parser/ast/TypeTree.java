@@ -1,8 +1,8 @@
 package edu.kit.kastel.vads.compiler.parser.ast;
 
-import edu.kit.kastel.vads.compiler.Span;
 import edu.kit.kastel.vads.compiler.parser.type.Type;
 import edu.kit.kastel.vads.compiler.parser.visitor.Visitor;
+import edu.kit.kastel.vads.compiler.util.Span;
 
 public record TypeTree(Type type, Span span) implements Tree {
   @Override

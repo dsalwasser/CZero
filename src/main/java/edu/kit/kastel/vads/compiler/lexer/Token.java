@@ -1,6 +1,6 @@
 package edu.kit.kastel.vads.compiler.lexer;
 
-import edu.kit.kastel.vads.compiler.Span;
+import edu.kit.kastel.vads.compiler.util.Span;
 
 public sealed interface Token
     permits ErrorToken, Identifier, Keyword, NumberLiteral, Operator, Separator {

@@ -1,9 +1,9 @@
 package edu.kit.kastel.vads.compiler.ir.util;
 
-import edu.kit.kastel.vads.compiler.Span;
 import edu.kit.kastel.vads.compiler.ir.IrGraph;
 import edu.kit.kastel.vads.compiler.ir.node.Block;
 import edu.kit.kastel.vads.compiler.ir.node.Node;
+import edu.kit.kastel.vads.compiler.util.Span;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;

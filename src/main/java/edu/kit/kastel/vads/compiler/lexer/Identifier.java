@@ -1,6 +1,6 @@
 package edu.kit.kastel.vads.compiler.lexer;
 
-import edu.kit.kastel.vads.compiler.Span;
+import edu.kit.kastel.vads.compiler.util.Span;
 
 public record Identifier(String value, Span span) implements Token {
   @Override

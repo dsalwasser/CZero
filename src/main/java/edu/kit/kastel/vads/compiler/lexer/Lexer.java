@@ -1,9 +1,9 @@
 package edu.kit.kastel.vads.compiler.lexer;
 
-import edu.kit.kastel.vads.compiler.Position;
-import edu.kit.kastel.vads.compiler.Span;
 import edu.kit.kastel.vads.compiler.lexer.Operator.OperatorType;
 import edu.kit.kastel.vads.compiler.lexer.Separator.SeparatorType;
+import edu.kit.kastel.vads.compiler.util.Position;
+import edu.kit.kastel.vads.compiler.util.Span;
 import java.util.Optional;
 import org.jspecify.annotations.Nullable;
 
