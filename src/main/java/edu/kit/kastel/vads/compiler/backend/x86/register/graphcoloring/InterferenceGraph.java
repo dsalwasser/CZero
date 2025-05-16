@@ -1,4 +1,4 @@
-package edu.kit.kastel.vads.compiler.backend.x86.registerallocation.graphcoloring;
+package edu.kit.kastel.vads.compiler.backend.x86.register.graphcoloring;
 
 import edu.kit.kastel.vads.compiler.backend.util.ControlFlowOrder;
 import edu.kit.kastel.vads.compiler.ir.IrGraph;

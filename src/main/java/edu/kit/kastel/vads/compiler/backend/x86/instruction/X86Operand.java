@@ -1,4 +1,6 @@
-package edu.kit.kastel.vads.compiler.backend.x86;
+package edu.kit.kastel.vads.compiler.backend.x86.instruction;
+
+import edu.kit.kastel.vads.compiler.backend.x86.register.X86Register;
 
 public sealed interface X86Operand {
 

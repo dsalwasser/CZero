@@ -1,9 +1,9 @@
-package edu.kit.kastel.vads.compiler.backend.x86.registerallocation.virtual;
+package edu.kit.kastel.vads.compiler.backend.x86.register.virtual;
 
 import edu.kit.kastel.vads.compiler.backend.util.ControlFlowOrder;
-import edu.kit.kastel.vads.compiler.backend.x86.X86Register;
-import edu.kit.kastel.vads.compiler.backend.x86.registerallocation.X86RegisterAllocation;
-import edu.kit.kastel.vads.compiler.backend.x86.registerallocation.X86RegisterAllocator;
+import edu.kit.kastel.vads.compiler.backend.x86.register.X86Register;
+import edu.kit.kastel.vads.compiler.backend.x86.register.X86RegisterAllocation;
+import edu.kit.kastel.vads.compiler.backend.x86.register.X86RegisterAllocator;
 import edu.kit.kastel.vads.compiler.ir.IrGraph;
 import edu.kit.kastel.vads.compiler.ir.node.BinaryOperationNode;
 import edu.kit.kastel.vads.compiler.ir.node.Node;

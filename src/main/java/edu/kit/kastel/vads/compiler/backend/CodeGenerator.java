@@ -2,8 +2,8 @@ package edu.kit.kastel.vads.compiler.backend;
 
 import edu.kit.kastel.vads.compiler.backend.aasm.AasmCodeGenerator;
 import edu.kit.kastel.vads.compiler.backend.x86.X86CodeGenerator;
-import edu.kit.kastel.vads.compiler.backend.x86.registerallocation.graphcoloring.LeastUsedColorSpillingHeuristic;
-import edu.kit.kastel.vads.compiler.backend.x86.registerallocation.graphcoloring.X86GraphColoringRegisterAllocator;
+import edu.kit.kastel.vads.compiler.backend.x86.register.graphcoloring.LeastUsedColorSpillingHeuristic;
+import edu.kit.kastel.vads.compiler.backend.x86.register.graphcoloring.X86GraphColoringRegisterAllocator;
 import edu.kit.kastel.vads.compiler.ir.IrGraph;
 import java.util.List;
 

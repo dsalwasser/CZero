@@ -1,4 +1,4 @@
-package edu.kit.kastel.vads.compiler.backend.x86.registerallocation.graphcoloring;
+package edu.kit.kastel.vads.compiler.backend.x86.register.graphcoloring;
 
 import java.util.Set;
 
