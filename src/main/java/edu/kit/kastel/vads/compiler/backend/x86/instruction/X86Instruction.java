@@ -1,4 +1,4 @@
-package edu.kit.kastel.vads.compiler.backend.x86;
+package edu.kit.kastel.vads.compiler.backend.x86.instruction;
 
 public sealed interface X86Instruction {
 
@@ -62,6 +62,13 @@ public sealed interface X86Instruction {
     @Override
     public String toString() {
       return "ret";
+    }
+  }
+
+  record Nop() implements X86Instruction {
+    @Override
+    public String toString() {
+      return "nop";
     }
   }
 }

@@ -1,8 +1,8 @@
-package edu.kit.kastel.vads.compiler.backend.x86.registerallocation.graphcoloring;
+package edu.kit.kastel.vads.compiler.backend.x86.register.graphcoloring;
 
-import edu.kit.kastel.vads.compiler.backend.x86.X86Register;
-import edu.kit.kastel.vads.compiler.backend.x86.registerallocation.X86RegisterAllocation;
-import edu.kit.kastel.vads.compiler.backend.x86.registerallocation.X86RegisterAllocator;
+import edu.kit.kastel.vads.compiler.backend.x86.register.X86Register;
+import edu.kit.kastel.vads.compiler.backend.x86.register.X86RegisterAllocation;
+import edu.kit.kastel.vads.compiler.backend.x86.register.X86RegisterAllocator;
 import edu.kit.kastel.vads.compiler.ir.IrGraph;
 import edu.kit.kastel.vads.compiler.ir.node.Node;
 import java.util.HashMap;

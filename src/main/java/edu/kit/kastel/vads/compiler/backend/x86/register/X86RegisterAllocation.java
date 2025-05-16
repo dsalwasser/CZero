@@ -1,6 +1,5 @@
-package edu.kit.kastel.vads.compiler.backend.x86.registerallocation;
+package edu.kit.kastel.vads.compiler.backend.x86.register;
 
-import edu.kit.kastel.vads.compiler.backend.x86.X86Register;
 import edu.kit.kastel.vads.compiler.ir.node.Node;
 import java.util.List;
 import java.util.Map;
