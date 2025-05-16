@@ -21,6 +21,10 @@ public final class Compiler {
     return new Compiler(CodeGenerator.construct(target));
   }
 
+  public static Compiler construct(CodeGenerator codeGenerator) {
+    return new Compiler(codeGenerator);
+  }
+
   private CodeGenerator codeGenerator;
 
   private Compiler(CodeGenerator codeGenerator) {

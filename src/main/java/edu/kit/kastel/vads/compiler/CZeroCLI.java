@@ -64,7 +64,7 @@ public class CZeroCLI implements Callable<Integer> {
       return SEMANTIC_EXCEPTION_EXIT_CODE;
     }
 
-    if (target == TargetMachine.X86) {
+    if (requiresAssembly) {
       try {
         assemble(compileOutputPath, outputPath);
       } catch (IOException | InterruptedException e) {
