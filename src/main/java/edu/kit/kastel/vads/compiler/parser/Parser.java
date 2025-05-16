@@ -1,6 +1,5 @@
 package edu.kit.kastel.vads.compiler.parser;
 
-import edu.kit.kastel.vads.compiler.Span;
 import edu.kit.kastel.vads.compiler.lexer.Identifier;
 import edu.kit.kastel.vads.compiler.lexer.Keyword;
 import edu.kit.kastel.vads.compiler.lexer.KeywordType;
@@ -28,6 +27,7 @@ import edu.kit.kastel.vads.compiler.parser.ast.StatementTree;
 import edu.kit.kastel.vads.compiler.parser.ast.TypeTree;
 import edu.kit.kastel.vads.compiler.parser.symbol.Name;
 import edu.kit.kastel.vads.compiler.parser.type.BasicType;
+import edu.kit.kastel.vads.compiler.util.Span;
 import java.util.ArrayList;
 import java.util.List;
 

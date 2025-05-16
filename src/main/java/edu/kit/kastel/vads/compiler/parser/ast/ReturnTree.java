@@ -1,8 +1,8 @@
 package edu.kit.kastel.vads.compiler.parser.ast;
 
-import edu.kit.kastel.vads.compiler.Position;
-import edu.kit.kastel.vads.compiler.Span;
 import edu.kit.kastel.vads.compiler.parser.visitor.Visitor;
+import edu.kit.kastel.vads.compiler.util.Position;
+import edu.kit.kastel.vads.compiler.util.Span;
 
 public record ReturnTree(ExpressionTree expression, Position start) implements StatementTree {
   @Override

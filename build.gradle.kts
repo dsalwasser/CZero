@@ -6,11 +6,11 @@ plugins {
 }
 
 group = "edu.kit.kastel.logic"
-version = "1.0-SNAPSHOT"
+version = "1.0"
 
 application {
   mainModule = "edu.kit.kastel.vads.compiler"
-  mainClass = "edu.kit.kastel.vads.compiler.Main"
+  mainClass = "edu.kit.kastel.vads.compiler.CZeroCLI"
 }
 
 repositories {

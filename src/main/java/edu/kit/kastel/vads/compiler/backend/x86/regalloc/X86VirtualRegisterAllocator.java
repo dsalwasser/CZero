@@ -1,10 +1,9 @@
-package edu.kit.kastel.vads.compiler.backend.aasm;
+package edu.kit.kastel.vads.compiler.backend.x86.regalloc;
 
-import edu.kit.kastel.vads.compiler.backend.aasm.AasmRegister.AasmVirtualRegister;
 import edu.kit.kastel.vads.compiler.backend.util.ControlFlowOrder;
+import edu.kit.kastel.vads.compiler.backend.x86.X86Register;
 import edu.kit.kastel.vads.compiler.ir.IrGraph;
 import edu.kit.kastel.vads.compiler.ir.node.BinaryOperationNode;
-import edu.kit.kastel.vads.compiler.ir.node.ConstIntNode;
 import edu.kit.kastel.vads.compiler.ir.node.Node;
 import edu.kit.kastel.vads.compiler.ir.node.Phi;
 import edu.kit.kastel.vads.compiler.ir.node.ReturnNode;
@@ -12,26 +11,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public final class AasmRegisterAllocator {
+public final class X86VirtualRegisterAllocator implements X86RegisterAllocator {
 
-  public Map<Node, AasmRegister> allocateRegisters(IrGraph function) {
-    Map<Node, AasmRegister> registers = new HashMap<>();
-    int slot = 0;
+  @Override
+  public X86RegisterAllocation allocateRegisters(IrGraph function) {
+    Map<Node, X86Register> registerAllocation = new HashMap<>();
+    int curSlot = 0;
 
     List<Node> nodes = ControlFlowOrder.getNodesByControlFlowOrder(function);
     for (Node node : nodes) {
       if (needsRegister(node)) {
-        registers.put(node, new AasmVirtualRegister(slot++));
+        registerAllocation.put(node, new X86Register.Virtual(curSlot++));
       }
     }
 
-    return registers;
+    return new X86RegisterAllocation(registerAllocation, curSlot);
   }
 
   private static boolean needsRegister(Node node) {
-    return node instanceof ConstIntNode
-        || node instanceof BinaryOperationNode
-        || node instanceof Phi
-        || node instanceof ReturnNode;
+    return node instanceof BinaryOperationNode || node instanceof Phi || node instanceof ReturnNode;
   }
 }

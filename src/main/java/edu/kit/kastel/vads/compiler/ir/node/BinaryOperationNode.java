@@ -1,5 +1,7 @@
 package edu.kit.kastel.vads.compiler.ir.node;
 
+import edu.kit.kastel.vads.compiler.ir.util.NodeSupport;
+
 public abstract sealed class BinaryOperationNode extends Node
     permits AddNode, DivNode, ModNode, MulNode, SubNode {
   public static final int LEFT = 0;
@@ -34,6 +36,14 @@ public abstract sealed class BinaryOperationNode extends Node
     // commutative operation: op(x, y) == op(y, x)
     return a.predecessor(LEFT) == b.predecessor(RIGHT)
         && a.predecessor(RIGHT) == b.predecessor(LEFT);
+  }
+
+  public Node left() {
+    return NodeSupport.predecessorSkipProj(this, BinaryOperationNode.LEFT);
+  }
+
+  public Node right() {
+    return NodeSupport.predecessorSkipProj(this, BinaryOperationNode.RIGHT);
   }
 
   @Override
