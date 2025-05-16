@@ -4,8 +4,8 @@ import edu.kit.kastel.vads.compiler.backend.CodeGenerator;
 import edu.kit.kastel.vads.compiler.backend.util.ControlFlowOrder;
 import edu.kit.kastel.vads.compiler.backend.util.DivisionOperation;
 import edu.kit.kastel.vads.compiler.backend.util.SimpleArithmeticOperation;
-import edu.kit.kastel.vads.compiler.backend.x86.regalloc.X86RegisterAllocation;
-import edu.kit.kastel.vads.compiler.backend.x86.regalloc.X86RegisterAllocator;
+import edu.kit.kastel.vads.compiler.backend.x86.registerallocation.X86RegisterAllocation;
+import edu.kit.kastel.vads.compiler.backend.x86.registerallocation.X86RegisterAllocator;
 import edu.kit.kastel.vads.compiler.ir.IrGraph;
 import edu.kit.kastel.vads.compiler.ir.node.AddNode;
 import edu.kit.kastel.vads.compiler.ir.node.BinaryOperationNode;
@@ -44,7 +44,8 @@ public final class X86CodeGenerator extends CodeGenerator {
       _main:
       """;
 
-  private static final X86Operand SPILL_OPERAND = X86Operand.R15D;
+  private static final X86Operand SPILL_OPERAND =
+      new X86Operand.Register(X86RegisterAllocation.SPILL_REGISTER);
 
   private StringBuilder codeBuilder;
 

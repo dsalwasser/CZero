@@ -2,6 +2,8 @@ package edu.kit.kastel.vads.compiler.backend.x86;
 
 public sealed interface X86Register {
 
+  public static final int NUM_REGISTERS = 16;
+
   public static final Physical EAX = new Physical(X86RegisterID.EAX);
   public static final Physical EBX = new Physical(X86RegisterID.EBX);
   public static final Physical ECX = new Physical(X86RegisterID.ECX);
