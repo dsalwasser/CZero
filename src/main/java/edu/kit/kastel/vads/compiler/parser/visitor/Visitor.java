@@ -16,29 +16,29 @@ import edu.kit.kastel.vads.compiler.parser.ast.TypeTree;
 
 public interface Visitor<T, R> {
 
-    R visit(AssignmentTree assignmentTree, T data);
+  R visit(AssignmentTree assignmentTree, T data);
 
-    R visit(BinaryOperationTree binaryOperationTree, T data);
+  R visit(BinaryOperationTree binaryOperationTree, T data);
 
-    R visit(BlockTree blockTree, T data);
+  R visit(BlockTree blockTree, T data);
 
-    R visit(DeclarationTree declarationTree, T data);
+  R visit(DeclarationTree declarationTree, T data);
 
-    R visit(FunctionTree functionTree, T data);
+  R visit(FunctionTree functionTree, T data);
 
-    R visit(IdentExpressionTree identExpressionTree, T data);
+  R visit(IdentExpressionTree identExpressionTree, T data);
 
-    R visit(LiteralTree literalTree, T data);
+  R visit(LiteralTree literalTree, T data);
 
-    R visit(LValueIdentTree lValueIdentTree, T data);
+  R visit(LValueIdentTree lValueIdentTree, T data);
 
-    R visit(NameTree nameTree, T data);
+  R visit(NameTree nameTree, T data);
 
-    R visit(NegateTree negateTree, T data);
+  R visit(NegateTree negateTree, T data);
 
-    R visit(ProgramTree programTree, T data);
+  R visit(ProgramTree programTree, T data);
 
-    R visit(ReturnTree returnTree, T data);
+  R visit(ReturnTree returnTree, T data);
 
-    R visit(TypeTree typeTree, T data);
+  R visit(TypeTree typeTree, T data);
 }

@@ -1,20 +1,21 @@
 package edu.kit.kastel.vads.compiler;
 
 public sealed interface Span {
-    Position start();
-    Position end();
+  Position start();
 
-    Span merge(Span later);
+  Position end();
 
-    record SimpleSpan(Position start, Position end) implements Span {
-        @Override
-        public Span merge(Span later) {
-            return new SimpleSpan(start(), later.end());
-        }
+  Span merge(Span later);
 
-        @Override
-        public String toString() {
-            return "[" + start() + "|" + end() + "]";
-        }
+  record SimpleSpan(Position start, Position end) implements Span {
+    @Override
+    public Span merge(Span later) {
+      return new SimpleSpan(start(), later.end());
     }
+
+    @Override
+    public String toString() {
+      return "[" + start() + "|" + end() + "]";
+    }
+  }
 }

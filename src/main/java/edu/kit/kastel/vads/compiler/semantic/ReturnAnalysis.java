@@ -9,22 +9,22 @@ import edu.kit.kastel.vads.compiler.parser.visitor.Unit;
 /// Currently only works for straight-line code.
 class ReturnAnalysis implements NoOpVisitor<ReturnAnalysis.ReturnState> {
 
-    static class ReturnState {
-        boolean returns = false;
-    }
+  static class ReturnState {
+    boolean returns = false;
+  }
 
-    @Override
-    public Unit visit(ReturnTree returnTree, ReturnState data) {
-        data.returns = true;
-        return NoOpVisitor.super.visit(returnTree, data);
-    }
+  @Override
+  public Unit visit(ReturnTree returnTree, ReturnState data) {
+    data.returns = true;
+    return NoOpVisitor.super.visit(returnTree, data);
+  }
 
-    @Override
-    public Unit visit(FunctionTree functionTree, ReturnState data) {
-        if (!data.returns) {
-            throw new SemanticException("function " + functionTree.name() + " does not return");
-        }
-        data.returns = false;
-        return NoOpVisitor.super.visit(functionTree, data);
+  @Override
+  public Unit visit(FunctionTree functionTree, ReturnState data) {
+    if (!data.returns) {
+      throw new SemanticException("function " + functionTree.name() + " does not return");
     }
+    data.returns = false;
+    return NoOpVisitor.super.visit(functionTree, data);
+  }
 }

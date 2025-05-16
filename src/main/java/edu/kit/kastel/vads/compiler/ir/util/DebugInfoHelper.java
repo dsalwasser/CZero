@@ -4,13 +4,13 @@ package edu.kit.kastel.vads.compiler.ir.util;
 /// It allows tracking debug info without having to pass it
 /// down all the layers.
 public final class DebugInfoHelper {
-    private static DebugInfo debugInfo = DebugInfo.NoInfo.INSTANCE;
+  private static DebugInfo debugInfo = DebugInfo.NoInfo.INSTANCE;
 
-    public static void setDebugInfo(DebugInfo debugInfo) {
-        DebugInfoHelper.debugInfo = debugInfo;
-    }
+  public static void setDebugInfo(DebugInfo debugInfo) {
+    DebugInfoHelper.debugInfo = debugInfo;
+  }
 
-    public static DebugInfo getDebugInfo() {
-        return debugInfo;
-    }
+  public static DebugInfo getDebugInfo() {
+    return debugInfo;
+  }
 }
