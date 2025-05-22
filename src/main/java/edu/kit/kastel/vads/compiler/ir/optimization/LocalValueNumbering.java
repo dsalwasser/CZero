@@ -1,4 +1,4 @@
-package edu.kit.kastel.vads.compiler.ir.optimize;
+package edu.kit.kastel.vads.compiler.ir.optimization;
 
 import edu.kit.kastel.vads.compiler.ir.node.Node;
 import java.util.HashMap;

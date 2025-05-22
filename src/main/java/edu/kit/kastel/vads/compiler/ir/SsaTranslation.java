@@ -4,7 +4,7 @@ import edu.kit.kastel.vads.compiler.ir.node.Block;
 import edu.kit.kastel.vads.compiler.ir.node.DivNode;
 import edu.kit.kastel.vads.compiler.ir.node.ModNode;
 import edu.kit.kastel.vads.compiler.ir.node.Node;
-import edu.kit.kastel.vads.compiler.ir.optimize.Optimizer;
+import edu.kit.kastel.vads.compiler.ir.optimization.Optimizer;
 import edu.kit.kastel.vads.compiler.ir.util.DebugInfo;
 import edu.kit.kastel.vads.compiler.ir.util.DebugInfoHelper;
 import edu.kit.kastel.vads.compiler.parser.ast.AssignmentTree;
