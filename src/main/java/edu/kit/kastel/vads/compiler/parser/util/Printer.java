@@ -1,4 +1,4 @@
-package edu.kit.kastel.vads.compiler.parser;
+package edu.kit.kastel.vads.compiler.parser.util;
 
 import edu.kit.kastel.vads.compiler.parser.ast.AssignmentTree;
 import edu.kit.kastel.vads.compiler.parser.ast.BinaryOperationTree;

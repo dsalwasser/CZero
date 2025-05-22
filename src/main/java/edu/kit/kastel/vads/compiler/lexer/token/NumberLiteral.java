@@ -1,5 +1,6 @@
-package edu.kit.kastel.vads.compiler.lexer;
+package edu.kit.kastel.vads.compiler.lexer.token;
 
+import edu.kit.kastel.vads.compiler.lexer.Token;
 import edu.kit.kastel.vads.compiler.util.Span;
 
 public record NumberLiteral(String value, int base, Span span) implements Token {

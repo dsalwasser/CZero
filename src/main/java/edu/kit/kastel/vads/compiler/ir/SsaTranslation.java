@@ -34,6 +34,7 @@ import java.util.function.BinaryOperator;
 // Form`](https://compilers.cs.uni-saarland.de/papers/bbhlmz13cc.pdf).
 ///
 /// This implementation also tracks side effect edges that can be used to avoid reordering of
+
 // operations that cannot be
 /// reordered.
 ///
@@ -85,7 +86,7 @@ public class SsaTranslation {
     public Optional<Node> visit(AssignmentTree assignmentTree, SsaTranslation data) {
       pushSpan(assignmentTree);
       BinaryOperator<Node> desugar =
-          switch (assignmentTree.operator().type()) {
+          switch (assignmentTree.operator().kind()) {
             case ASSIGN_MINUS -> data.constructor::newSub;
             case ASSIGN_PLUS -> data.constructor::newAdd;
             case ASSIGN_MUL -> data.constructor::newMul;
@@ -118,7 +119,7 @@ public class SsaTranslation {
       Node lhs = binaryOperationTree.lhs().accept(this, data).orElseThrow();
       Node rhs = binaryOperationTree.rhs().accept(this, data).orElseThrow();
       Node res =
-          switch (binaryOperationTree.operatorType()) {
+          switch (binaryOperationTree.operatorKind()) {
             case MINUS -> data.constructor.newSub(lhs, rhs);
             case PLUS -> data.constructor.newAdd(lhs, rhs);
             case MUL -> data.constructor.newMul(lhs, rhs);
@@ -126,7 +127,7 @@ public class SsaTranslation {
             case MOD -> projResultDivMod(data, data.constructor.newMod(lhs, rhs));
             default ->
                 throw new IllegalArgumentException(
-                    "not a binary expression operator " + binaryOperationTree.operatorType());
+                    "not a binary expression operator " + binaryOperationTree.operatorKind());
           };
       popSpan();
       return Optional.of(res);

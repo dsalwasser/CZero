@@ -32,7 +32,7 @@ public final class Compiler {
   }
 
   public String compile(String source) throws ParseException, SemanticException {
-    Lexer lexer = Lexer.forString(source);
+    Lexer lexer = new Lexer(source);
     TokenSource tokenSource = new TokenSource(lexer);
 
     Parser parser = new Parser(tokenSource);

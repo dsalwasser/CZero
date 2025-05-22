@@ -1,6 +1,6 @@
 package edu.kit.kastel.vads.compiler.semantic;
 
-import edu.kit.kastel.vads.compiler.lexer.Operator;
+import edu.kit.kastel.vads.compiler.lexer.OperatorKind;
 import edu.kit.kastel.vads.compiler.parser.ast.AssignmentTree;
 import edu.kit.kastel.vads.compiler.parser.ast.DeclarationTree;
 import edu.kit.kastel.vads.compiler.parser.ast.IdentExpressionTree;
@@ -24,7 +24,7 @@ class VariableStatusAnalysis
     switch (assignmentTree.lValue()) {
       case LValueIdentTree(var name) -> {
         VariableStatus status = data.get(name);
-        if (assignmentTree.operator().type() == Operator.OperatorType.ASSIGN) {
+        if (assignmentTree.operator().kind() == OperatorKind.ASSIGN) {
           checkDeclared(name, status);
         } else {
           checkInitialized(name, status);
