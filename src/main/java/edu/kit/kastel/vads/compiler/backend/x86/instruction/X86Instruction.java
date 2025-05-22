@@ -30,6 +30,20 @@ public sealed interface X86Instruction {
     }
   }
 
+  record Shl(X86Operand left, X86Operand right) implements X86Instruction {
+    @Override
+    public String toString() {
+      return String.format("shl %s, %s", left, right);
+    }
+  }
+
+  record And(X86Operand left, X86Operand right) implements X86Instruction {
+    @Override
+    public String toString() {
+      return String.format("and %s, %s", left, right);
+    }
+  }
+
   record Cdq() implements X86Instruction {
     @Override
     public String toString() {

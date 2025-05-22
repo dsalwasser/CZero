@@ -4,7 +4,7 @@ import edu.kit.kastel.vads.compiler.backend.CodeGenerator;
 import edu.kit.kastel.vads.compiler.backend.TargetMachine;
 import edu.kit.kastel.vads.compiler.ir.IrGraph;
 import edu.kit.kastel.vads.compiler.ir.SsaTranslation;
-import edu.kit.kastel.vads.compiler.ir.optimize.LocalValueNumbering;
+import edu.kit.kastel.vads.compiler.ir.optimization.LocalValueNumbering;
 import edu.kit.kastel.vads.compiler.lexer.Lexer;
 import edu.kit.kastel.vads.compiler.parser.ParseException;
 import edu.kit.kastel.vads.compiler.parser.Parser;
