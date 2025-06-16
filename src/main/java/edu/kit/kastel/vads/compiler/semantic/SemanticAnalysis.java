@@ -2,6 +2,13 @@ package edu.kit.kastel.vads.compiler.semantic;
 
 import edu.kit.kastel.vads.compiler.parser.ast.ProgramTree;
 import edu.kit.kastel.vads.compiler.parser.visitor.RecursivePostorderVisitor;
+import edu.kit.kastel.vads.compiler.parser.visitor.Unit;
+import edu.kit.kastel.vads.compiler.parser.visitor.Visitor;
+import edu.kit.kastel.vads.compiler.semantic.analyser.IntegerLiteralRangeAnalysis;
+import edu.kit.kastel.vads.compiler.semantic.analyser.LoopAnalysis;
+import edu.kit.kastel.vads.compiler.semantic.analyser.ReturnAnalysis;
+import edu.kit.kastel.vads.compiler.semantic.analyser.TypeAnalysis;
+import edu.kit.kastel.vads.compiler.semantic.analyser.VariableStatusAnalysis;
 
 public class SemanticAnalysis {
 
@@ -12,11 +19,15 @@ public class SemanticAnalysis {
   }
 
   public void analyze() {
-    this.program.accept(
-        new RecursivePostorderVisitor<>(new IntegerLiteralRangeAnalysis()), new Namespace<>());
-    this.program.accept(
-        new RecursivePostorderVisitor<>(new VariableStatusAnalysis()), new Namespace<>());
-    this.program.accept(
-        new RecursivePostorderVisitor<>(new ReturnAnalysis()), new ReturnAnalysis.ReturnState());
+    runAnalyzer(new ReturnAnalysis(), null);
+    runAnalyzer(new LoopAnalysis(), new LoopAnalysis.LoopStatus());
+    runAnalyzer(new VariableStatusAnalysis(), new VariableStatusAnalysis.VariableStatus());
+    runAnalyzer(
+        new RecursivePostorderVisitor<>(new TypeAnalysis()), new TypeAnalysis.BlockNamespace<>());
+    runAnalyzer(new RecursivePostorderVisitor<>(new IntegerLiteralRangeAnalysis()), Unit.INSTANCE);
+  }
+
+  private <T, R> void runAnalyzer(Visitor<T, R> visitor, T t) {
+    this.program.accept(visitor, t);
   }
 }

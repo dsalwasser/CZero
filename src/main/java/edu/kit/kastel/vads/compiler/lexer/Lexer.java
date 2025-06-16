@@ -65,7 +65,7 @@ public final class Lexer {
           // '|' might be a bitwise-or '|', a logical-or '||', or an or-assign '|='
           case '|' ->
               matchSingleOrCompoundOperator(
-                  OperatorKind.BITWISE_OR, '&', OperatorKind.OR, '=', OperatorKind.ASSIGN_OR);
+                  OperatorKind.BITWISE_OR, '|', OperatorKind.OR, '=', OperatorKind.ASSIGN_OR);
 
           // '<' might be a less-than '<', a less-then-equal '<=', a left-shift '<<', or a
           // assign-left-shift '<<='

@@ -1,7 +1,7 @@
 package edu.kit.kastel.vads.compiler.backend.x86.register.graphcoloring;
 
 import edu.kit.kastel.vads.compiler.backend.x86.register.X86RegisterAllocation;
-import edu.kit.kastel.vads.compiler.ir.node.Node;
+import edu.kit.kastel.vads.compiler.ir.node.IRNode;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -17,7 +17,7 @@ public final class LeastUsedColorSpillingHeuristic implements SpillingHeuristic 
     Set<Integer> spilledColors = new HashSet<>();
 
     Map<Integer, Integer> colorOccurrences = new HashMap<>();
-    for (Node node : graph.nodes()) {
+    for (IRNode node : graph.nodes()) {
       int nodeColor = coloring.get(node);
       colorOccurrences.put(nodeColor, colorOccurrences.getOrDefault(nodeColor, 0) + 1);
     }

@@ -3,7 +3,8 @@ package edu.kit.kastel.vads.compiler.parser.ast;
 import edu.kit.kastel.vads.compiler.parser.visitor.Visitor;
 import edu.kit.kastel.vads.compiler.util.Span;
 
-public record NegateTree(ExpressionTree expression, Span minusPos) implements ExpressionTree {
+public record NegateTree(Kind kind, ExpressionTree expression, Span minusPos)
+    implements ExpressionTree {
   @Override
   public Span span() {
     return minusPos().merge(expression().span());
@@ -12,5 +13,22 @@ public record NegateTree(ExpressionTree expression, Span minusPos) implements Ex
   @Override
   public <T, R> R accept(Visitor<T, R> visitor, T data) {
     return visitor.visit(this, data);
+  }
+
+  public enum Kind {
+    LOGICAL("!"),
+    BITWISE("~"),
+    NUMERICAL("-");
+
+    private final String value;
+
+    Kind(String value) {
+      this.value = value;
+    }
+
+    @Override
+    public String toString() {
+      return this.value;
+    }
   }
 }

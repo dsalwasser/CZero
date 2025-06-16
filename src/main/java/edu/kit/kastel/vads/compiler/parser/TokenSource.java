@@ -1,5 +1,6 @@
 package edu.kit.kastel.vads.compiler.parser;
 
+import edu.kit.kastel.vads.compiler.exception.ParseException;
 import edu.kit.kastel.vads.compiler.lexer.KeywordKind;
 import edu.kit.kastel.vads.compiler.lexer.Lexer;
 import edu.kit.kastel.vads.compiler.lexer.OperatorKind;
@@ -32,7 +33,7 @@ public class TokenSource {
 
   public Token peek() {
     if (!hasMore()) {
-      throw new ParseException("reached end of file");
+      throw new ParseException("reached end of file", null);
     }
 
     return this.tokens.get(this.index);
@@ -41,7 +42,7 @@ public class TokenSource {
   public Keyword expectKeyword(KeywordKind type) {
     Token token = peek();
     if (!(token instanceof Keyword kw) || kw.type() != type) {
-      throw new ParseException("expected keyword '" + type + "' but got " + token);
+      throw new ParseException("expected keyword '" + type + "' but got " + token, token.span());
     }
 
     this.index++;
@@ -51,7 +52,7 @@ public class TokenSource {
   public Separator expectSeparator(SeparatorKind kind) {
     Token token = peek();
     if (!(token instanceof Separator sep) || sep.kind() != kind) {
-      throw new ParseException("expected separator '" + kind + "' but got " + token);
+      throw new ParseException("expected separator '" + kind + "' but got " + token, token.span());
     }
 
     this.index++;
@@ -61,7 +62,7 @@ public class TokenSource {
   public Operator expectOperator(OperatorKind kind) {
     Token token = peek();
     if (!(token instanceof Operator op) || op.kind() != kind) {
-      throw new ParseException("expected operator '" + kind + "' but got " + token);
+      throw new ParseException("expected operator '" + kind + "' but got " + token, token.span());
     }
 
     this.index++;
@@ -71,7 +72,7 @@ public class TokenSource {
   public Identifier expectIdentifier() {
     Token token = peek();
     if (!(token instanceof Identifier ident)) {
-      throw new ParseException("expected identifier but got " + token);
+      throw new ParseException("expected identifier but got " + token, token.span());
     }
 
     this.index++;

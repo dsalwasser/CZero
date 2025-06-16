@@ -3,9 +3,15 @@ package edu.kit.kastel.vads.compiler.parser.util;
 import edu.kit.kastel.vads.compiler.parser.ast.AssignmentTree;
 import edu.kit.kastel.vads.compiler.parser.ast.BinaryOperationTree;
 import edu.kit.kastel.vads.compiler.parser.ast.BlockTree;
+import edu.kit.kastel.vads.compiler.parser.ast.BooleanLiteralTree;
+import edu.kit.kastel.vads.compiler.parser.ast.BreakTree;
+import edu.kit.kastel.vads.compiler.parser.ast.ConditionalExpressionTree;
+import edu.kit.kastel.vads.compiler.parser.ast.ContinueTree;
 import edu.kit.kastel.vads.compiler.parser.ast.DeclarationTree;
+import edu.kit.kastel.vads.compiler.parser.ast.ForTree;
 import edu.kit.kastel.vads.compiler.parser.ast.FunctionTree;
 import edu.kit.kastel.vads.compiler.parser.ast.IdentExpressionTree;
+import edu.kit.kastel.vads.compiler.parser.ast.IfTree;
 import edu.kit.kastel.vads.compiler.parser.ast.LValueIdentTree;
 import edu.kit.kastel.vads.compiler.parser.ast.LiteralTree;
 import edu.kit.kastel.vads.compiler.parser.ast.NameTree;
@@ -15,6 +21,7 @@ import edu.kit.kastel.vads.compiler.parser.ast.ReturnTree;
 import edu.kit.kastel.vads.compiler.parser.ast.StatementTree;
 import edu.kit.kastel.vads.compiler.parser.ast.Tree;
 import edu.kit.kastel.vads.compiler.parser.ast.TypeTree;
+import edu.kit.kastel.vads.compiler.parser.ast.WhileTree;
 import java.util.List;
 
 /// This is a utility class to help with debugging the parser.
@@ -51,6 +58,22 @@ public class Printer {
         this.indentDepth--;
         print("}");
       }
+      case BreakTree(var _) -> {
+        print("break;");
+      }
+      case BooleanLiteralTree(var value, _) -> {
+        print(value ? "true" : "false");
+      }
+      case ConditionalExpressionTree(var condition, var lhs, var rhs) -> {
+        print(condition);
+        print(" ? ");
+        print(lhs);
+        print(" : ");
+        print(rhs);
+      }
+      case ContinueTree(var _) -> {
+        print("continue;");
+      }
       case FunctionTree(var returnType, var name, var body) -> {
         printTree(returnType);
         space();
@@ -58,6 +81,41 @@ public class Printer {
         print("()");
         space();
         printTree(body);
+      }
+      case ForTree(var init, var condition, var step, var statement, var _) -> {
+        print("for (");
+        init.ifPresent(initStatement -> print(initStatement));
+
+        print("; ");
+        print(condition);
+
+        print("; ");
+        step.ifPresent(stepStatement -> print(stepStatement));
+
+        print(")");
+        lineBreak();
+
+        print(statement);
+      }
+      case IfTree(var expression, var main, var elseStatement, var _) -> {
+        print("if (");
+        print(expression);
+
+        print(") ");
+        print(main);
+
+        elseStatement.ifPresent(
+            statement -> {
+              print(" else ");
+              print(statement);
+            });
+      }
+      case WhileTree(var expression, var statement, var _) -> {
+        print("while (");
+        print(expression);
+
+        print(")");
+        print(statement);
       }
       case NameTree(var name, _) -> print(name.asString());
       case ProgramTree(var topLevelTrees) -> {
@@ -79,8 +137,13 @@ public class Printer {
         print(")");
       }
       case LiteralTree(var value, _, _) -> this.builder.append(value);
-      case NegateTree(var expression, _) -> {
-        print("-(");
+      case NegateTree(var kind, var expression, _) -> {
+        switch (kind) {
+          case NegateTree.Kind.LOGICAL -> print("!");
+          case NegateTree.Kind.BITWISE -> print("~");
+          case NegateTree.Kind.NUMERICAL -> print("-");
+        }
+        print("(");
         printTree(expression);
         print(")");
       }

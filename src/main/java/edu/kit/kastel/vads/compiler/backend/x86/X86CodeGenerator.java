@@ -5,7 +5,7 @@ import edu.kit.kastel.vads.compiler.backend.x86.instruction.X86Instruction;
 import edu.kit.kastel.vads.compiler.backend.x86.instruction.X86InstructionGenerator;
 import edu.kit.kastel.vads.compiler.backend.x86.optimization.X86InstructionOptimizer;
 import edu.kit.kastel.vads.compiler.backend.x86.register.X86RegisterAllocator;
-import edu.kit.kastel.vads.compiler.ir.IrGraph;
+import edu.kit.kastel.vads.compiler.ir.IRGraph;
 import java.util.List;
 
 public final class X86CodeGenerator extends CodeGenerator {
@@ -19,13 +19,15 @@ public final class X86CodeGenerator extends CodeGenerator {
       .text
 
       main:
-      call _main
+        call _main
 
-      # move the return value into the first argument for the syscall
-      mov edi, eax
-      # move the exit syscall number into rax
-      mov eax, 0x3C
-      syscall
+        # move the return value into the first argument for the syscall
+        mov edi, eax
+
+        # move the exit syscall number into rax
+        mov eax, 0x3C
+
+        syscall
 
       _main:
       """;
@@ -41,17 +43,21 @@ public final class X86CodeGenerator extends CodeGenerator {
   }
 
   @Override
-  public String generateCode(List<IrGraph> program) {
+  public String generateCode(List<IRGraph> program) {
     codeBuilder.setLength(0);
     codeBuilder.append(ASSEMBLY_HEADER);
 
-    for (IrGraph function : program) {
+    for (IRGraph function : program) {
       List<X86Instruction> instructions = instructionGenerator.generateInstructions(function);
       instructionOptimizer.optimize(instructions);
 
       for (X86Instruction instruction : instructions) {
         if (instruction instanceof X86Instruction.Nop) {
           continue;
+        }
+
+        if (!(instruction instanceof X86Instruction.Label)) {
+          codeBuilder.append("  ");
         }
 
         codeBuilder.append(instruction.toString());

@@ -1,12 +1,12 @@
 package edu.kit.kastel.vads.compiler.backend.x86.register;
 
-import edu.kit.kastel.vads.compiler.ir.node.Node;
+import edu.kit.kastel.vads.compiler.ir.node.IRNode;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public final record X86RegisterAllocation(
-    Map<Node, X86Register> allocation, int numVirtualRegisters) {
+    Map<IRNode, X86Register> allocation, int numVirtualRegisters) {
 
   public static final X86Register SPILL_REGISTER = X86Register.R15D;
   public static final Set<X86Register> RESERVED_REGISTERS =
@@ -28,7 +28,7 @@ public final record X86RegisterAllocation(
           X86Register.R13D,
           X86Register.R14D);
 
-  public X86Register get(Node node) {
+  public X86Register get(IRNode node) {
     return allocation.get(node);
   }
 }

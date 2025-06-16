@@ -13,6 +13,10 @@ public sealed interface Token
 
   Span span();
 
+  default boolean isType() {
+    return false;
+  }
+
   default boolean isKeyword(KeywordKind keywordKind) {
     return false;
   }
