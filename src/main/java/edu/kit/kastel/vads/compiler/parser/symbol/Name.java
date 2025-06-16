@@ -1,7 +1,7 @@
 package edu.kit.kastel.vads.compiler.parser.symbol;
 
-import edu.kit.kastel.vads.compiler.lexer.Identifier;
-import edu.kit.kastel.vads.compiler.lexer.Keyword;
+import edu.kit.kastel.vads.compiler.lexer.token.Identifier;
+import edu.kit.kastel.vads.compiler.lexer.token.Keyword;
 
 public sealed interface Name permits IdentName, KeywordName {
 

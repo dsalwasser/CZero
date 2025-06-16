@@ -1,21 +1,23 @@
 package edu.kit.kastel.vads.compiler.parser;
 
-import edu.kit.kastel.vads.compiler.lexer.Identifier;
-import edu.kit.kastel.vads.compiler.lexer.Keyword;
-import edu.kit.kastel.vads.compiler.lexer.KeywordType;
+import edu.kit.kastel.vads.compiler.exception.ParseException;
+import edu.kit.kastel.vads.compiler.lexer.KeywordKind;
 import edu.kit.kastel.vads.compiler.lexer.Lexer;
-import edu.kit.kastel.vads.compiler.lexer.Operator;
-import edu.kit.kastel.vads.compiler.lexer.Operator.OperatorType;
-import edu.kit.kastel.vads.compiler.lexer.Separator;
-import edu.kit.kastel.vads.compiler.lexer.Separator.SeparatorType;
+import edu.kit.kastel.vads.compiler.lexer.OperatorKind;
+import edu.kit.kastel.vads.compiler.lexer.SeparatorKind;
 import edu.kit.kastel.vads.compiler.lexer.Token;
+import edu.kit.kastel.vads.compiler.lexer.token.Identifier;
+import edu.kit.kastel.vads.compiler.lexer.token.Keyword;
+import edu.kit.kastel.vads.compiler.lexer.token.Operator;
+import edu.kit.kastel.vads.compiler.lexer.token.Separator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
 public class TokenSource {
   private final List<Token> tokens;
-  private int idx;
+
+  private int index;
 
   public TokenSource(Lexer lexer) {
     this.tokens =
@@ -30,59 +32,60 @@ public class TokenSource {
   }
 
   public Token peek() {
-    expectHasMore();
-    return this.tokens.get(this.idx);
+    if (!hasMore()) {
+      throw new ParseException("reached end of file", null);
+    }
+
+    return this.tokens.get(this.index);
   }
 
-  public Keyword expectKeyword(KeywordType type) {
+  public Keyword expectKeyword(KeywordKind type) {
     Token token = peek();
     if (!(token instanceof Keyword kw) || kw.type() != type) {
-      throw new ParseException("expected keyword '" + type + "' but got " + token);
+      throw new ParseException("expected keyword '" + type + "' but got " + token, token.span());
     }
-    this.idx++;
+
+    this.index++;
     return kw;
   }
 
-  public Separator expectSeparator(SeparatorType type) {
+  public Separator expectSeparator(SeparatorKind kind) {
     Token token = peek();
-    if (!(token instanceof Separator sep) || sep.type() != type) {
-      throw new ParseException("expected separator '" + type + "' but got " + token);
+    if (!(token instanceof Separator sep) || sep.kind() != kind) {
+      throw new ParseException("expected separator '" + kind + "' but got " + token, token.span());
     }
-    this.idx++;
+
+    this.index++;
     return sep;
   }
 
-  public Operator expectOperator(OperatorType type) {
+  public Operator expectOperator(OperatorKind kind) {
     Token token = peek();
-    if (!(token instanceof Operator op) || op.type() != type) {
-      throw new ParseException("expected operator '" + type + "' but got " + token);
+    if (!(token instanceof Operator op) || op.kind() != kind) {
+      throw new ParseException("expected operator '" + kind + "' but got " + token, token.span());
     }
-    this.idx++;
+
+    this.index++;
     return op;
   }
 
   public Identifier expectIdentifier() {
     Token token = peek();
     if (!(token instanceof Identifier ident)) {
-      throw new ParseException("expected identifier but got " + token);
+      throw new ParseException("expected identifier but got " + token, token.span());
     }
-    this.idx++;
+
+    this.index++;
     return ident;
   }
 
   public Token consume() {
     Token token = peek();
-    this.idx++;
+    this.index++;
     return token;
   }
 
   public boolean hasMore() {
-    return this.idx < this.tokens.size();
-  }
-
-  private void expectHasMore() {
-    if (this.idx >= this.tokens.size()) {
-      throw new ParseException("reached end of file");
-    }
+    return this.index < this.tokens.size();
   }
 }

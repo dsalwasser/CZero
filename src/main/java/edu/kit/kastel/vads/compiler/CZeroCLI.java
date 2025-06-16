@@ -1,8 +1,8 @@
 package edu.kit.kastel.vads.compiler;
 
 import edu.kit.kastel.vads.compiler.backend.TargetMachine;
-import edu.kit.kastel.vads.compiler.parser.ParseException;
-import edu.kit.kastel.vads.compiler.semantic.SemanticException;
+import edu.kit.kastel.vads.compiler.exception.ParseException;
+import edu.kit.kastel.vads.compiler.exception.SemanticException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -45,30 +45,40 @@ public class CZeroCLI implements Callable<Integer> {
       description = "Valid targets: ${COMPLETION-CANDIDATES} | Default target: ${DEFAULT-VALUE}")
   private TargetMachine target;
 
+  private String source;
+
   @Override
-  public Integer call() throws Exception {
+  public Integer call() {
+
     boolean requiresAssembly = target == TargetMachine.X86;
     Path compileOutputPath =
         requiresAssembly ? outputPath.resolveSibling(outputPath.getFileName() + ".s") : outputPath;
 
     try {
-      compile(sourcePath, compileOutputPath);
+      source = Files.readString(sourcePath);
     } catch (IOException e) {
-      System.err.println("Failed to read the input file or store the output file");
+      System.err.println("Failed to read the source file");
+      return IO_EXCEPTION_EXIT_CODE;
+    }
+
+    try {
+      compile(compileOutputPath);
+    } catch (IOException e) {
+      System.err.println("Failed to write " + (requiresAssembly ? "assembly" : "output") + " file");
       return IO_EXCEPTION_EXIT_CODE;
     } catch (ParseException e) {
-      System.err.println("Invalid source: " + e.getMessage());
+      e.prettyPrint(source);
       return PARSE_EXCEPTION_EXIT_CODE;
     } catch (SemanticException e) {
-      System.err.println("Invalid source: " + e.getMessage());
+      e.prettyPrint(source);
       return SEMANTIC_EXCEPTION_EXIT_CODE;
     }
 
     if (requiresAssembly) {
       try {
         assemble(compileOutputPath, outputPath);
-      } catch (IOException | InterruptedException e) {
-        System.err.println("Failed to generate assembly");
+      } catch (IOException | InterruptedException | RuntimeException e) {
+        System.err.println("Failed to generate the executable from assembly");
         System.exit(ASSEMBLE_EXCEPTION_EXIT_CODE);
       }
     }
@@ -76,10 +86,8 @@ public class CZeroCLI implements Callable<Integer> {
     return SUCCESS_EXIT_CODE;
   }
 
-  private void compile(Path input, Path output) throws IOException {
-    String source = Files.readString(input);
+  private void compile(Path output) throws IOException {
     Compiler compiler = Compiler.construct(target);
-
     String code = compiler.compile(source);
     Files.writeString(output, code);
   }

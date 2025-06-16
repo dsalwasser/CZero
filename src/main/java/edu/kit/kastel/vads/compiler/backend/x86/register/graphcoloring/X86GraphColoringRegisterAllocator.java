@@ -3,8 +3,8 @@ package edu.kit.kastel.vads.compiler.backend.x86.register.graphcoloring;
 import edu.kit.kastel.vads.compiler.backend.x86.register.X86Register;
 import edu.kit.kastel.vads.compiler.backend.x86.register.X86RegisterAllocation;
 import edu.kit.kastel.vads.compiler.backend.x86.register.X86RegisterAllocator;
-import edu.kit.kastel.vads.compiler.ir.IrGraph;
-import edu.kit.kastel.vads.compiler.ir.node.Node;
+import edu.kit.kastel.vads.compiler.ir.IRGraph;
+import edu.kit.kastel.vads.compiler.ir.node.IRNode;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,15 +19,15 @@ public final class X86GraphColoringRegisterAllocator implements X86RegisterAlloc
   }
 
   @Override
-  public X86RegisterAllocation allocateRegisters(IrGraph function) {
+  public X86RegisterAllocation allocateRegisters(IRGraph function) {
     InterferenceGraph graph = InterferenceGraph.construct(function);
-    List<Node> ordering = MaximumCardinalitySearch.computeSimplicialEliminationOrdering(graph);
+    List<IRNode> ordering = MaximumCardinalitySearch.computeSimplicialEliminationOrdering(graph);
 
     Coloring coloring = GreedyColoring.applyGreedyColoring(graph, ordering);
     Set<Integer> spilledColors = spillingHeuristic.computeColorsToSpill(graph, coloring);
 
     Map<Integer, X86Register> colorMapping = computeColorMapping(coloring, spilledColors);
-    Map<Node, X86Register> registerAllocation = computeRegisterAllocation(coloring, colorMapping);
+    Map<IRNode, X86Register> registerAllocation = computeRegisterAllocation(coloring, colorMapping);
 
     final int numVirutalRegisters = spilledColors.size();
     return new X86RegisterAllocation(registerAllocation, numVirutalRegisters);
@@ -51,9 +51,9 @@ public final class X86GraphColoringRegisterAllocator implements X86RegisterAlloc
     return colorMapping;
   }
 
-  private static Map<Node, X86Register> computeRegisterAllocation(
+  private static Map<IRNode, X86Register> computeRegisterAllocation(
       Coloring coloring, Map<Integer, X86Register> colorMapping) {
-    Map<Node, X86Register> registerAllocation = new HashMap<>();
+    Map<IRNode, X86Register> registerAllocation = new HashMap<>();
 
     coloring
         .assignment()

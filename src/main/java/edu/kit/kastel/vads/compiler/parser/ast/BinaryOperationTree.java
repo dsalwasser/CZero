@@ -1,11 +1,10 @@
 package edu.kit.kastel.vads.compiler.parser.ast;
 
-import edu.kit.kastel.vads.compiler.lexer.Operator;
+import edu.kit.kastel.vads.compiler.lexer.OperatorKind;
 import edu.kit.kastel.vads.compiler.parser.visitor.Visitor;
 import edu.kit.kastel.vads.compiler.util.Span;
 
-public record BinaryOperationTree(
-    ExpressionTree lhs, ExpressionTree rhs, Operator.OperatorType operatorType)
+public record BinaryOperationTree(ExpressionTree lhs, ExpressionTree rhs, OperatorKind operatorKind)
     implements ExpressionTree {
   @Override
   public Span span() {

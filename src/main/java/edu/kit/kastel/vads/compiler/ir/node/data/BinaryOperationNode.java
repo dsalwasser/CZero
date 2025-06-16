@@ -1,0 +1,90 @@
+package edu.kit.kastel.vads.compiler.ir.node.data;
+
+import edu.kit.kastel.vads.compiler.ir.Block;
+import edu.kit.kastel.vads.compiler.ir.node.IRDataNode;
+
+public abstract sealed class BinaryOperationNode extends IRDataNode
+    permits AddNode,
+        DivNode,
+        ModNode,
+        MulNode,
+        SubNode,
+        EqualityNode,
+        InequalityNode,
+        LessThanEqualNode,
+        LessThanNode,
+        GreaterThanEqualNode,
+        GreaterThanNode,
+        AndNode,
+        OrNode,
+        BitwiseAndNode,
+        BitwiseOrNode,
+        BitwiseXORNode,
+        LeftShiftNode,
+        RightShiftNode {
+  public static final int LEFT = 0;
+  public static final int RIGHT = 1;
+
+  protected BinaryOperationNode(Block block, IRDataNode left, IRDataNode right) {
+    super(block, left, right);
+  }
+
+  protected BinaryOperationNode(
+      Block block, IRDataNode left, IRDataNode right, IRDataNode sideEffect) {
+    super(block, left, right, sideEffect);
+  }
+
+  protected static int commutativeHashCode(BinaryOperationNode node) {
+    int h = node.block().hashCode() * 31 + node.getClass().hashCode();
+    // commutative operation: we want h(op(x, y)) == h(op(y, x))
+    h += 31 * (predecessorHash(node, LEFT) ^ predecessorHash(node, RIGHT));
+    return h;
+  }
+
+  protected static boolean commutativeEquals(BinaryOperationNode a, Object bObj) {
+    if (!(bObj instanceof BinaryOperationNode b)) {
+      return false;
+    }
+    if (a.getClass() != b.getClass()) {
+      return false;
+    }
+    if (a.block() != b.block()) {
+      return false;
+    }
+    if (a.predecessor(LEFT) == b.predecessor(LEFT)
+        && a.predecessor(RIGHT) == b.predecessor(RIGHT)) {
+      return true;
+    }
+    // commutative operation: op(x, y) == op(y, x)
+    return a.predecessor(LEFT) == b.predecessor(RIGHT)
+        && a.predecessor(RIGHT) == b.predecessor(LEFT);
+  }
+
+  public IRDataNode left() {
+    return (IRDataNode) predecessor(LEFT);
+  }
+
+  public IRDataNode right() {
+    return (IRDataNode) predecessor(RIGHT);
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (!(obj instanceof BinaryOperationNode binOp)) {
+      return false;
+    }
+    return obj.getClass() == this.getClass()
+        && block() == binOp.block()
+        && this.predecessor(LEFT) == binOp.predecessor(LEFT)
+        && this.predecessor(RIGHT) == binOp.predecessor(RIGHT);
+  }
+
+  @Override
+  public int hashCode() {
+    int h = block().hashCode() * 31;
+    h +=
+        (predecessorHash(this, LEFT) * 31 + predecessorHash(this, RIGHT))
+            ^ this.getClass().hashCode();
+    return h;
+  }
+}
